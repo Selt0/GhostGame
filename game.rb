@@ -1,4 +1,5 @@
 require 'set'
+require_relative 'players'
 
 class Ghostgame
   ALPHABET = Set.new('a'..'z')
@@ -14,7 +15,7 @@ class Ghostgame
 
   def run
     play_round until game_over?
-    puts "#{winner} wins!"
+    return "#{winner} wins!"
   end
 
   private
@@ -83,7 +84,7 @@ class Ghostgame
 
   def winner 
     (player, _ ) = losses.find { | _ , losses| losses < MAX_LOSS_COUNT }
-    player
+    player.name
   end
 
   def record(player)
@@ -129,9 +130,9 @@ class Ghostgame
 
   def update_standings
     system('clear')
-    puts "#{previous_player.name} spelled #{fragment}."
+    puts "#{previous_player.name} spelled '#{fragment}'."
     puts "#{previous_player.name} gets a letter!"
-    sleep(2)
+    sleep(1)
 
     if losses[previous_player] == MAX_LOSS_COUNT - 1
       puts "#{previous_player.name} has been elimated! Womp womp."
